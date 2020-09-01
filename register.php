@@ -154,6 +154,10 @@ try {
             padding-left: 0;
             color: red;
         }
+        .to-login {
+            color: blue;
+            text-decoration: underline;
+        }
 /*フッター*/
         footer {
             border-top: solid 1px silver;
@@ -218,7 +222,7 @@ try {
 <?php } ?>
 <?php if ($msg !== '') { ?>
         <p><?php print $msg; ?></p>
-        <p><a href="login.php">ログインページに移動</a></p>
+        <p><a href="login.php" class="to-login">ログインページに移動</a></p>
 <?php } ?>
     </main>
     <footer>

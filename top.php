@@ -15,6 +15,7 @@ $cart_num       = array();
 $err_msg        = array();
 $search_err_msg = array();
 $data_search    = array();
+$price_data     = array();
 $data_history   = array();
 // ページングの変数　定数
 define('MAX','15');
@@ -134,16 +135,15 @@ try {
                             FROM ec_item_master
                             INNER JOIN ec_item_stock
                             ON ec_item_master.item_id = ec_item_stock.item_id
-                            WHERE status = ?
+                            WHERE status = 1
                             AND   price BETWEEN ? AND ?';
                     $stmt = $dbh->prepare($sql);
-                    $stmt->bindvalue(1, 1,           PDO::PARAM_STR);
-                    $stmt->bindvalue(2, $mini_price, PDO::PARAM_STR);
-                    $stmt->bindvalue(3, $max_price,  PDO::PARAM_STR);
+                    $stmt->bindvalue(1, $mini_price, PDO::PARAM_STR);
+                    $stmt->bindvalue(2, $max_price,  PDO::PARAM_STR);
                     $stmt->execute();
-                    $data = $stmt->fetchAll();
-                    
-                    if (count($data) === 0) {
+                    $price_data = $stmt->fetchAll();
+                    // var_dump($data);
+                    if (count($price_data) === 0) {
                         $err_msg = 'ご指定の条件に一致するアイテムが見つかりませんでした。';
                     }
                 } catch (PDOException $e) {
@@ -263,6 +263,9 @@ try {
         
         if ($sql_kind === 'search_word') {
             $data = $data_search;
+        }
+        if ($sql_kind === 'price_search') {
+            $data = $price_data;
         }
         
 // print_r($data);
